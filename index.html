@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!--
+        Goal
+        We want to be able to watch multiple different elements on a page such as other forms or any other DOM element. So we want to be able to send analytics for each element of a list of selectors, which could potentially contain <buttons>, <a> tags, select dropdowns, individual form inputs, etc...
+
+        Maybe a JSON object could be provided that would list various selectors on the page to watch and emit events for. It could also contain relevant information for events that would be sent.
+     -->
+    <!-- Google Analytics -->
+    <script>
+      // For Testing
+      function ga() { console.log(arguments); };
+      // Google Analytics Custom Code
+      window.onload = function customAnalyticsScript() {
+      // The element list to be tracked
+      var elementList = [
+            {
+              selector: "#importantButton",
+              category: "Button",
+              action: "click",
+              label: "This button was clickity CLICKED",
+            },
+            {
+              selector: "#niceLink",
+              category: "Link",
+              action: "click",
+              label: "This link was clickity CLICKED",
+            },
+            {
+              selector: "#usefulForm",
+              category: "Form",
+              action: "submit",
+              label: "This form was submitity SUBMITTED",
+            },
+            {
+              selector: ".usefulFormInputs",
+              category: "Inputs",
+              action: "change",
+              label: "This input was changed",
+            }
+      ];
+      // ForEach that goes through all elements in the list using a switch case to set event listeners and send data to analytics
+      elementList.forEach(function(element) {
+          // Grab elements
+          let elements = document.querySelectorAll(element.selector);
+          // Check if queryselector got multiple or individual elements
+                // Send each individual element from array
+                elements.forEach(function(element) {
+                      trackEvents(element);
+                });
+          // Switch Case function
+          function trackEvents(trackedElement) {
+            switch(trackedElement.tagName.toLowerCase()) {
+                // <button> tag case
+                case "button":
+                    // Adds a listener for the button click event
+                    trackedElement.addEventListener("click", function(event) {
+                        // Now we can start sending analytics
+                        ga('send', {
+                            hitType: 'event',
+                            eventCategory: element.category,
+                            eventAction: element.action
+                        });
+                    });
+                    break;
+                // <a> tag case
+                case "a":
+                    trackedElement.addEventListener("click", function(event) {
+                    // Now we can start sending analytics
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: element.category,
+                        eventAction: element.action
+                    });
+                });
+                    break;
+                // <form> tag case
+                case "form":
+                    trackedElement.addEventListener("submit", function(event) {
+                          //Prevents the browser from submitting the form and unloads the page
+                          event.preventDefault();
+                          // Creates a timeout after 1 second then calls to submit the form in case the library fails to load
+                          setTimeout(submitForm, 1000);
+                          // Keep track of whether ot not the form has been submitted. This prevents double form submission
+                          // Set initial value (Form is not submitted yet)
+                          var isFormSubmitted = false;
+                          function submitForm() {
+                              if (!isFormSubmitted) {
+                                  // If form has not yet been submitted set variable to true and then submit form
+                                  formSubmitted = true;
+                                  trackedElement.submit();
+                              }
+                          }
+                          // Then we can send the event to Google analytics
+                          ga('send', {
+                              hitType: 'event',
+                              eventCategory: element.category,
+                              eventAction: element.action,
+                              hitCallback: submitForm
+                          });
+                    });
+                    break;
+                // <input> tag case
+                case "input":
+                case "select":
+                case "textarea":
+                    // If we need to we can check for specific input cases with this
+                    console.log(trackedElement.type);
+                    // Setup "change" event listener for inputs
+                    trackedElement.addEventListener("change", function(event) {
+                          // Now we can start sending analytics
+                          ga('send', {
+                            hitType: 'event',
+                            eventCategory: element.category,
+                            eventAction: element.action,
+                          });
+                    });
+                    break;
+            } // End of Switch
+          }
+      });
+    }; // End of customAnalyticsScript
+    </script>
+  </head>
+  <body>
+    <button id="importantButton">Click Me To Test</button>
+    <a id="niceLink" href="#">Click</a>
+    <form id="usefulForm" class="" action="index.html" method="post">
+        Name:
+        <input class="usefulFormInputs" type="text" name="" value="">
+        Email:
+        <input class="usefulFormInputs" type="email" name="" value="">
+        <input type="submit" name="" value="Submit Me!">
+    </form>
+  <script type="text/javascript" src="./Scripts/script.js"></script>
+  </body>
+</html>
