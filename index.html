@@ -53,6 +53,7 @@
                 });
           // Switch Case function
           function trackEvents(trackedElement) {
+            // Solution - https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName
             switch(trackedElement.tagName.toLowerCase()) {
                 // <button> tag case
                 case "button":
@@ -104,10 +105,12 @@
                     });
                     break;
                 // <input> tag case
+                // Solution found - https://stackoverflow.com/questions/13207927/switch-statement-multiple-cases-in-javascript
                 case "input":
                 case "select":
                 case "textarea":
                     // If we need to we can check for specific input cases with this
+                    // Solution - https://stackoverflow.com/questions/3510867/finding-the-type-of-an-input-element
                     console.log(trackedElement.type);
                     // Setup "change" event listener for inputs
                     trackedElement.addEventListener("change", function(event) {
