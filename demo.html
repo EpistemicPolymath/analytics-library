@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Demo File</title>
+    <script type="text/javascript" src="trackElementEvents.js"></script>
+    <script type="text/javascript">
+        // The element list to be tracked
+      var elementList = [
+            {
+              selector: "#importantButton",
+              category: "Button",
+              action: "click",
+              label: "This button was clickity CLICKED"
+            },
+            {
+              selector: "#niceLink",
+              category: "Link",
+              action: "click",
+              label: "This link was clickity CLICKED"
+            },
+            {
+              selector: "#usefulForm",
+              category: "Form",
+              action: "submit",
+              label: "This form was submitity SUBMITTED"
+            },
+            {
+              selector: ".usefulFormInputs",
+              category: "Inputs",
+              action: "change",
+              label: "This input was changed"
+            },
+            {
+              selector: ".eventTest",
+              category: "Inputs",
+              action: "input",
+              label: "This input did something special",
+              event: "input"
+            }
+      ];
+
+      trackElementEvents(elementList);
+    </script>
+  </head>
+  <body>
+    <button id="importantButton">Click Me To Test</button>
+    <a id="niceLink" href="#">Click</a>
+    <form id="usefulForm" class="" action="index.html" method="post">
+        Name:
+        <input class="usefulFormInputs" type="text" name="" value="">
+        Email:
+        <input class="usefulFormInputs" type="email" name="" value=""><br>
+        Service:
+        <input class="eventTest" type="text" name="" value="">
+        <input type="submit" name="" value="Submit Me!">
+    </form>
+  <script type="text/javascript" src="./Scripts/script.js"></script>
+  </body>
+</html>
