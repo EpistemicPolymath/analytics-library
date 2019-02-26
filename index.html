@@ -22,24 +22,35 @@
               category: "Button",
               action: "click",
               label: "This button was clickity CLICKED",
+              event: "" //optional
             },
             {
               selector: "#niceLink",
               category: "Link",
               action: "click",
               label: "This link was clickity CLICKED",
+              event: "" //optional
             },
             {
               selector: "#usefulForm",
               category: "Form",
               action: "submit",
               label: "This form was submitity SUBMITTED",
+              event: "" //optional
             },
             {
               selector: ".usefulFormInputs",
               category: "Inputs",
               action: "change",
               label: "This input was changed",
+              event: "" //optional
+            },
+            {
+              selector: ".eventTest",
+              category: "Inputs",
+              action: "input",
+              label: "This input did something special",
+              event: "input"
             }
       ];
       // ForEach that goes through all elements in the list using a switch case to set event listeners and send data to analytics
@@ -49,6 +60,22 @@
           // If queryselector got multiple or individual elements
           // Send each individual element from array with a forEach
           elements.forEach(function(trackedElement) {
+            // Optional Event Section
+            // https://stackoverflow.com/questions/154059/how-to-check-empty-undefined-null-string-in-javascript
+            // If an event has been provided and is not empty
+            if (element.event != 0) {
+                  trackedElement.addEventListener(element.event, function() {
+                      // Now we can start sending analytics for this special case
+                      ga('send', {
+                          hitType: 'event',
+                          eventCategory: element.category,
+                          eventAction: element.action,
+                          eventLabel: element.label
+                      });
+                  });
+                  // https://stackoverflow.com/questions/31399411/go-to-next-iteration-in-javascript-foreach-loop
+                  return; // This skips this element in the iteration so that it does not go to the switch statement.
+            }
             // Solution - https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName
             switch(trackedElement.tagName.toLowerCase()) {
                 // <button> tag case
@@ -59,7 +86,8 @@
                         ga('send', {
                             hitType: 'event',
                             eventCategory: element.category,
-                            eventAction: element.action
+                            eventAction: element.action,
+                            eventLabel: element.label
                         });
                     });
                     break;
@@ -84,7 +112,8 @@
                     ga('send', {
                         hitType: 'event',
                         eventCategory: element.category,
-                        eventAction: element.action
+                        eventAction: element.action,
+                        eventLabel: element.label
                     });
                 });
                     break;
@@ -110,6 +139,7 @@
                               hitType: 'event',
                               eventCategory: element.category,
                               eventAction: element.action,
+                              eventLabel: element.label,
                               hitCallback: submitForm
                           });
                     });
@@ -120,8 +150,7 @@
                 case "select":
                 case "textarea":
                     // If we need to we can check for specific input cases with this
-                    // Solution - https://stackoverflow.com/questions/3510867/finding-the-type-of-an-input-element
-                    console.log(trackedElement.type);
+                    // Solution - https://stackoverflow.com/questions/3510867/finding-the-type-of-an-input-element : trackedElement.type
                     // Setup "change" event listener for inputs
                     trackedElement.addEventListener("change", function(event) {
                           // Now we can start sending analytics
@@ -129,6 +158,7 @@
                             hitType: 'event',
                             eventCategory: element.category,
                             eventAction: element.action,
+                            eventLabel: element.label
                           });
                     });
                     break;
@@ -145,7 +175,9 @@
         Name:
         <input class="usefulFormInputs" type="text" name="" value="">
         Email:
-        <input class="usefulFormInputs" type="email" name="" value="">
+        <input class="usefulFormInputs" type="email" name="" value=""><br>
+        Service:
+        <input class="eventTest" type="text" name="" value="">
         <input type="submit" name="" value="Submit Me!">
     </form>
   <script type="text/javascript" src="./Scripts/script.js"></script>
