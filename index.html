@@ -21,29 +21,25 @@
               selector: "#importantButton",
               category: "Button",
               action: "click",
-              label: "This button was clickity CLICKED",
-              event: "" //optional
+              label: "This button was clickity CLICKED"
             },
             {
               selector: "#niceLink",
               category: "Link",
               action: "click",
-              label: "This link was clickity CLICKED",
-              event: "" //optional
+              label: "This link was clickity CLICKED"
             },
             {
               selector: "#usefulForm",
               category: "Form",
               action: "submit",
-              label: "This form was submitity SUBMITTED",
-              event: "" //optional
+              label: "This form was submitity SUBMITTED"
             },
             {
               selector: ".usefulFormInputs",
               category: "Inputs",
               action: "change",
-              label: "This input was changed",
-              event: "" //optional
+              label: "This input was changed"
             },
             {
               selector: ".eventTest",
@@ -63,7 +59,7 @@
             // Optional Event Section
             // https://stackoverflow.com/questions/154059/how-to-check-empty-undefined-null-string-in-javascript
             // If an event has been provided and is not empty
-            if (element.event != 0) {
+            if (element.hasOwnProperty('event')) {
                   trackedElement.addEventListener(element.event, function() {
                       // Now we can start sending analytics for this special case
                       ga('send', {
