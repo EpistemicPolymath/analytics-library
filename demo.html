@@ -41,7 +41,9 @@
       ];
       // For Testing
       function ga() { console.log(arguments); };
-      trackElementEvents(elementList);
+      window.addEventListener("load", function(){
+          trackElementEvents(elementList);
+      });
     </script>
   </head>
   <body>
