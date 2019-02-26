@@ -46,13 +46,9 @@
       elementList.forEach(function(element) {
           // Grab elements
           let elements = document.querySelectorAll(element.selector);
-          // Check if queryselector got multiple or individual elements
-                // Send each individual element from array
-                elements.forEach(function(indivElement) {
-                      trackEvents(indivElement);
-                });
-          // Switch Case function
-          function trackEvents(trackedElement) {
+          // If queryselector got multiple or individual elements
+          // Send each individual element from array with a forEach
+          elements.forEach(function(trackedElement) {
             // Solution - https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName
             switch(trackedElement.tagName.toLowerCase()) {
                 // <button> tag case
@@ -123,7 +119,7 @@
                     });
                     break;
             } // End of Switch
-          }
+          });
       });
     }; // End of customAnalyticsScript
     </script>
