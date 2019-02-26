@@ -1,6 +1,4 @@
 function trackElementEvents(elementList) {
-  // For Testing
-  function ga() { console.log(arguments); };
   // Google Analytics Custom Code
   window.onload = function customAnalyticsScript() {
   // ForEach that goes through all elements in the list using a switch case to set event listeners and send data to analytics
