@@ -48,8 +48,8 @@
           let elements = document.querySelectorAll(element.selector);
           // Check if queryselector got multiple or individual elements
                 // Send each individual element from array
-                elements.forEach(function(element) {
-                      trackEvents(element);
+                elements.forEach(function(indivElement) {
+                      trackEvents(indivElement);
                 });
           // Switch Case function
           function trackEvents(trackedElement) {
