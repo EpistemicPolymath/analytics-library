@@ -66,7 +66,21 @@
                 // <a> tag case
                 case "a":
                     trackedElement.addEventListener("click", function(event) {
-                    // Now we can start sending analytics
+                    // We may want to prevent default action for a link similarly to <forms>
+                    event.preventDefault();
+                    // Creates timeout for 1 second and then goes to link
+                    setTimeout(goToLink, 1000);
+                    //Keep track of whether or not link has navigated
+                    var hasNavigated = false;
+                    function goToLink() {
+                      // Solution - https://stackoverflow.com/questions/10945478/can-i-execute-a-link-after-a-preventdefault
+                        if (!hasNavigated) {
+                            // If the link has not yet navigated set variable to true and allow link to navigate
+                            hasNavigated = true;
+                            window.location.href = trackedElement.getAttribute("href");
+                        }
+                    }
+                    //  Then we can send the event to Google analytics
                     ga('send', {
                         hitType: 'event',
                         eventCategory: element.category,
