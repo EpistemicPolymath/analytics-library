@@ -99,6 +99,8 @@ function trackElementEvents(elementList) {
                       });
                 });
                 break;
+            default:
+                console.error("An unexpected element tag was found that we do not currently know how to parse");
             // <input> tag case
             // Solution found - https://stackoverflow.com/questions/13207927/switch-statement-multiple-cases-in-javascript
             case "input":
