@@ -8,7 +8,8 @@ function trackElementEvents(elementList) {
       // https://css-tricks.com/snippets/jquery/check-if-element-exists/
       if (elements.length === 0) {
           // The element(s) do not exist
-          console.warn("This element does not exist on the page");
+          console.warn("This element does not exist on the page: " + element.selector);
+          console.debug("Is this check working properly?" + elements);
           return; //This should skip this empty iteration of elements
         }
       // If queryselector got multiple or individual elements
@@ -27,6 +28,7 @@ function trackElementEvents(elementList) {
                       eventLabel: element.label
                   });
                   console.info("Sending event for selector: " + element.selector);
+                  comsole.debug("Did the right event send" + element.event);
               });
               // https://stackoverflow.com/questions/31399411/go-to-next-iteration-in-javascript-foreach-loop
               return; // This skips this element in the iteration so that it does not go to the switch statement.
@@ -124,6 +126,7 @@ function trackElementEvents(elementList) {
                 break;
             default:
                 console.error("An unexpected element tag was found that we do not currently know how to parse");
+                console.debug("Is this really a default case scenario?" + trackedElement.tagName.toLowerCase());
         } // End of Switch
       });
   });
