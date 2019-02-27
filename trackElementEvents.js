@@ -26,6 +26,7 @@ function trackElementEvents(elementList) {
                       eventAction: element.action,
                       eventLabel: element.label
                   });
+                  console.info("Sending event for selector: " + element.selector);
               });
               // https://stackoverflow.com/questions/31399411/go-to-next-iteration-in-javascript-foreach-loop
               return; // This skips this element in the iteration so that it does not go to the switch statement.
@@ -44,6 +45,7 @@ function trackElementEvents(elementList) {
                         eventAction: element.action,
                         eventLabel: element.label
                     });
+                    console.info("Sending event for selector: " + element.selector);
                 });
                 break;
             // <a> tag case
@@ -70,6 +72,7 @@ function trackElementEvents(elementList) {
                     eventAction: element.action,
                     eventLabel: element.label
                 });
+                console.info("Sending event for selector: " + element.selector);
             });
                 break;
             // <form> tag case
@@ -97,10 +100,9 @@ function trackElementEvents(elementList) {
                           eventLabel: element.label,
                           hitCallback: submitForm
                       });
+                      console.info("Sending event for selector: " + element.selector);
                 });
                 break;
-            default:
-                console.error("An unexpected element tag was found that we do not currently know how to parse");
             // <input> tag case
             // Solution found - https://stackoverflow.com/questions/13207927/switch-statement-multiple-cases-in-javascript
             case "input":
@@ -117,8 +119,11 @@ function trackElementEvents(elementList) {
                         eventAction: element.action,
                         eventLabel: element.label
                       });
+                      console.info("Sending event for selector: " + element.selector);
                 });
                 break;
+            default:
+                console.error("An unexpected element tag was found that we do not currently know how to parse");
         } // End of Switch
       });
   });
