@@ -4,6 +4,13 @@ function trackElementEvents(elementList) {
   elementList.forEach(function(element) {
       // Grab elements
       let elements = document.querySelectorAll(element.selector);
+      // Check if the element(s) exist on the page
+      // https://css-tricks.com/snippets/jquery/check-if-element-exists/
+      if (elements.length === 0) {
+          // The element(s) do not exist
+          console.warn("This element does not exist on the page");
+          return; //This should skip this empty iteration of elements
+        }
       // If queryselector got multiple or individual elements
       // Send each individual element from array with a forEach
       elements.forEach(function(trackedElement) {
@@ -27,6 +34,7 @@ function trackElementEvents(elementList) {
         switch(trackedElement.tagName.toLowerCase()) {
             // <button> tag case
             case "button":
+            case "div":
                 // Adds a listener for the button click event
                 trackedElement.addEventListener("click", function(event) {
                     // Now we can start sending analytics
