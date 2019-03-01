@@ -3,7 +3,7 @@ function trackElementEvents(elementList) {
   // ForEach that goes through all elements in the list using a switch case to set event listeners and send data to analytics
   elementList.forEach(function(element) {
       // Grab elements
-      let elements = document.querySelectorAll(element.selector);
+      var elements = document.querySelectorAll(element.selector);
       // Check if the element(s) exist on the page
       // https://css-tricks.com/snippets/jquery/check-if-element-exists/
       if (elements.length === 0) {
