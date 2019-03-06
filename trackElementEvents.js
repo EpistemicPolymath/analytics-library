@@ -54,7 +54,7 @@ function trackElementEvents(elementList) {
                   // Now we can start sending analytics for this special case
                   sendTracking(element.action, element.category, element.label);
                   console.info("Sending event for selector: " + element.selector);
-                  comsole.debug("Did the right event send" + element.event);
+                  console.debug("Did the right event send" + element.event);
               });
               // https://stackoverflow.com/questions/31399411/go-to-next-iteration-in-javascript-foreach-loop
               return; // This skips this element in the iteration so that it does not go to the switch statement.
