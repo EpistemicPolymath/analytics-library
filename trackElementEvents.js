@@ -1,5 +1,36 @@
 function trackElementEvents(elementList) {
-  // Google Analytics Custom Code
+  //Send Tracking for either gtag or ga
+  // The callback parameter will refer to a function to callback
+  function sendTracking(action, category, label, callback=undefined) {
+      // We can check to see if the callback is a function and if so call it, then log a success message
+      var ourCallback = function() {
+        typeof callback === 'function' && callback();
+        console.log('analytics event sent!');
+      }
+      if (typeof gtag === "function") { // Check for gtag
+          // The gtag function exists
+          // Send the data with gtag
+          gtag('event', action, {
+              event_category: category ,
+              event_label: label,
+              event_callback: ourCallback
+          });
+          return; // Break out the function
+      }
+      if (typeof ga === "function") { // Check for ga
+        // The ga function exists
+        // Send the data with ga
+          ga('send', {
+              hitType: 'event',
+              eventCategory: category,
+              eventAction: action,
+              eventLabel: label,
+              hitCallback: ourCallback
+          });
+          return; // Break out the function
+      }
+      console.error("The gtag or ga function is required for the analytics script to work."); // If all else fails, throw and error
+  }
   // ForEach that goes through all elements in the list using a switch case to set event listeners and send data to analytics
   elementList.forEach(function(element) {
       // Grab elements
@@ -21,12 +52,7 @@ function trackElementEvents(elementList) {
         if (element.hasOwnProperty('event')) {
               trackedElement.addEventListener(element.event, function() {
                   // Now we can start sending analytics for this special case
-                  ga('send', {
-                      hitType: 'event',
-                      eventCategory: element.category,
-                      eventAction: element.action,
-                      eventLabel: element.label
-                  });
+                  sendTracking(element.action, element.category, element.label);
                   console.info("Sending event for selector: " + element.selector);
                   comsole.debug("Did the right event send" + element.event);
               });
@@ -41,12 +67,7 @@ function trackElementEvents(elementList) {
                 // Adds a listener for the button click event
                 trackedElement.addEventListener("click", function(event) {
                     // Now we can start sending analytics
-                    ga('send', {
-                        hitType: 'event',
-                        eventCategory: element.category,
-                        eventAction: element.action,
-                        eventLabel: element.label
-                    });
+                    sendTracking(element.action, element.category, element.label);
                     console.info("Sending event for selector: " + element.selector);
                 });
                 break;
@@ -68,12 +89,7 @@ function trackElementEvents(elementList) {
                     }
                 }
                 //  Then we can send the event to Google analytics
-                ga('send', {
-                    hitType: 'event',
-                    eventCategory: element.category,
-                    eventAction: element.action,
-                    eventLabel: element.label
-                });
+                sendTracking(element.action, element.category, element.label);
                 console.info("Sending event for selector: " + element.selector);
             });
                 break;
@@ -95,13 +111,7 @@ function trackElementEvents(elementList) {
                           }
                       }
                       // Then we can send the event to Google analytics
-                      ga('send', {
-                          hitType: 'event',
-                          eventCategory: element.category,
-                          eventAction: element.action,
-                          eventLabel: element.label,
-                          hitCallback: submitForm
-                      });
+                      sendTracking(element.action, element.category, element.label, submitForm);
                       console.info("Sending event for selector: " + element.selector);
                 });
                 break;
@@ -115,12 +125,7 @@ function trackElementEvents(elementList) {
                 // Setup "change" event listener for inputs
                 trackedElement.addEventListener("change", function(event) {
                       // Now we can start sending analytics
-                      ga('send', {
-                        hitType: 'event',
-                        eventCategory: element.category,
-                        eventAction: element.action,
-                        eventLabel: element.label
-                      });
+                      sendTracking(element.action, element.category, element.label);
                       console.info("Sending event for selector: " + element.selector);
                 });
                 break;
