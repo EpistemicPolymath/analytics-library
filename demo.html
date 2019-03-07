@@ -11,36 +11,42 @@
               selector: "#importantButton",
               category: "Button",
               action: "click",
-              label: "This button was clickity CLICKED"
+              label: "This button was clickity CLICKED",
+              url: "\/?(.*)\/?"
             },
             {
               selector: "#niceLink",
               category: "Link",
               action: "click",
-              label: "This link was clickity CLICKED"
+              label: "This link was clickity CLICKED",
+              url: "\/?(.*)\/?"
             },
             {
               selector: "#usefulForm",
               category: "Form",
               action: "submit",
-              label: "This form was submitity SUBMITTED"
+              label: "This form was submitity SUBMITTED",
+              url: "\/?(.*)\/?"
             },
             {
               selector: ".usefulFormInputs",
               category: "Inputs",
               action: "change",
-              label: "This input was changed"
+              label: "This input was changed",
+              url: "\/?(.*)\/?"
             },
             {
               selector: ".eventTest",
               category: "Inputs",
               action: "input",
               label: "This input did something special",
-              event: "input"
+              event: "input",
+              url: "\/?(.*)\/?"
             }
       ];
       // For Testing
       function ga() { console.log(arguments); };
+      function gtag() { console.log(arguments); };
       window.addEventListener("load", function(){
           trackElementEvents(elementList);
       });

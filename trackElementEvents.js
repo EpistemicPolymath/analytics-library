@@ -32,7 +32,12 @@ function trackElementEvents(elementList) {
       console.error("The gtag or ga function is required for the analytics script to work."); // If all else fails, throw and error
   }
   // ForEach that goes through all elements in the list using a switch case to set event listeners and send data to analytics
-  elementList.forEach(function(element) {
+  elementList.filter(function(element) {
+      // Check Required URL For Filtering
+      // window.location.href - How we know where we are on the site
+      // https://stackoverflow.com/questions/6603015/check-whether-a-string-matches-a-regex-in-js
+      return (new RegExp(element.url)).test(window.location.pathname);
+  }).forEach(function(element) {
       // Grab elements
       var elements = document.querySelectorAll(element.selector);
       // Check if the element(s) exist on the page
