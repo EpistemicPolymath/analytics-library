@@ -1,7 +1,7 @@
 function trackElementEvents(elementList) {
   //Send Tracking for either gtag or ga
   // The callback parameter will refer to a function to callback
-  function sendTracking(action, category, label, callback=undefined) {
+  function sendTracking(action, category, label, callback) {
       // We can check to see if the callback is a function and if so call it, then log a success message
       var ourCallback = function() {
         typeof callback === 'function' && callback();
